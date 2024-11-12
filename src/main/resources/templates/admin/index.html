@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description"
+	content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+<meta name="author" content="AdminKit">
+<meta name="keywords"
+	content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+<link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}"
+	href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet"
+	type="text/css" media="all" />
+<link rel="preconnect" href="https://fonts.gstatic.com"
+	th:href="@{https://fonts.gstatic.com}">
+<link rel="shortcut icon" th:href="@{/admin/img/icons/icon-48x48.png}" />
+
+<link rel="canonical" th:href="@{https://demo-basic.adminkit.io/}" />
+
+<title>Admin</title>
+
+<link th:href="@{/admin/css/app.css}" rel="stylesheet" type="text/css"
+	media="all">
+<link
+	th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap}"
+	rel="stylesheet" type="text/css" media="all">
+</head>
+
+<body>
+	<div class="wrapper">
+		<div th:replace="./admin/layout/sidebar ::  #sidebar"></div>
+
+		<div class="main">
+			<div th:replace="./admin/layout/nav ::  #nav-admin"></div>
+			<main class="content">
+				<div class="container-fluid p-0">
+
+					<h1 class="h3 mb-3">
+						<strong>Trang chủ</strong>
+					</h1>
+
+					<div class="row">
+						<div class="col-xl-6 col-xxl-5 d-flex">
+							<div class="w-100">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Inventory</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<a
+																th:href="@{/shoeshop/admin/report/detailTotalQuantity}"><i
+																class="align-middle" data-feather="truck"></i></a>
+														</div>
+													</div>
+												</div>
+												<h1 class="mt-1 mb-3" th:each="rp : ${totalInventory}">
+													<label th:text="${rp.totalInventory}"></label> <i
+														class="text-end text-secondary" style="font-size: 10px">
+														SP</i>
+												</h1>
+												<div class="mb-0">
+													<span class="text-danger"> <span class="text-muted">Tổng
+															Số Lượng Kho</span>
+												</div>
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Products</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<a th:href="@{/shoeshop/admin/report/productDetail}"><i
+																class="align-middle" data-feather="box"></i></a>
+														</div>
+													</div>
+												</div>
+												<h1 class="mt-1 mb-3" th:each="rp : ${rpIndex}">
+													<label th:text="${rp.totalQuantity}"> </label> <i
+														class="text-end text-secondary" style="font-size: 10px">
+														SP</i>
+												</h1>
+												<div class="mb-0">
+													<span class="text-success"> <span class="text-muted">Tổng
+															sản phẩm</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Revenue</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<a th:href="@{/shoeshop/admin/report/TotalRevenue}">
+																<i class="align-middle" data-feather="dollar-sign"></i>
+															</a>
+														</div>
+													</div>
+												</div>
+												<h1 class="mt-1 mb-3" th:each="rp : ${TotalRevenue}">
+													<label th:text="${rp.totalRevenue}"></label> <i
+														class="small text-secondary" style="font-size: 10px">VND</i>
+												</h1>
+												<div class="mb-0">
+													<span class="text-muted text-center">Tổng Doanh Thu
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Orders</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<a th:href="@{/shoeshop/admin/report/totalOderQuantity}"><i
+																class="align-middle" data-feather="shopping-cart"></i></a>
+														</div>
+													</div>
+												</div>
+												<h1 class="mt-1 mb-3" th:each="rp : ${TotalODer}">
+													<label th:text="${rp.totalODer}"></label> <i
+														class="text-end text-secondary" style="font-size: 10px">
+														SP</i>
+												</h1>
+												<div class="mb-0">
+													<span class="text-danger"> <span class="text-muted">Tổng
+															số lượng mua hàng</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-xl-6 col-xxl-7">
+							<div class="card flex-fill w-100">
+								<div class=" row">
+						
+									<h5 class="card-title mb-0 col-lg-6 mt-2">
+										Doanh Số Hàng Đã Bán Được</h5>
+									<div class="form-floating col-lg-6">
+										<form class="container" action="/shoeshop/admin/index"
+											method="post">
+											<div class="row">
+												<label for="exampleFormControlSelect2" class="mb-2"></label>
+												<div class="col-8 d-flex align-items-center">
+													<select class="form-select" id="exampleFormControlSelect2"
+														name="year" aria-label="Chọn một lựa chọn">
+														<option th:each="year : ${years}" th:value="${year}"
+															th:selected="${year == yearUpdate}" th:text="${year}"></option>
+													</select>
+												</div>
+												<div class="col-lg-4 d-flex align-items-center">
+													<button class="btn btn-success">Lọc</button>
+												</div>
+											</div>
+
+
+
+										</form>
+									</div>
+								</div>
+
+								<div class="card-body py-3">
+
+									<div class="chart chart-sm">
+										<canvas id="chartjs-dashboard-line"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+				</div>
+			</main>
+
+			<div th:replace="./admin/layout/footer ::  #footer-admin"></div>
+		</div>
+	</div>
+
+	<script th:src="@{/admin/js/app.js}"></script>
+	<!-- ĐỒ THỊ -->
+
+
+	<script th:src="@{/admin/js/horizontal-chart.js}"></script>
+
+	<script th:inline="javascript">
+		var salesData = /*[[${salesData}]]*/[];
+	</script>
+
+
+	<!-- Đồ thị tròn-->
+
+	<script th:src="@{/admin/js/pie-chart.js}"></script>
+	<script th:inline="javascript">
+		var pieData = /*[[${pieData}]]*/[];
+	</script>
+
+
+	<!-- Đồ thị cột -->
+	<script th:src="@{/admin/js/column-chart.js}"></script>
+	<script th:inline="javascript">
+		var barData = /*[[${barData}]]*/[];
+	</script>
+
+
+	<!--Map -->
+	<script th:src="@{/admin/js/map.js}"></script>
+
+	<!-- calendar -->
+	<script th:src="@{/admin/js/calendar.js}"></script>
+
+</body>
+
+</html>

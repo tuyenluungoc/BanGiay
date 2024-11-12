@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" th:href="@{/icons/logoMain_48.png}" type="image/x-icon">
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="https://icons.getbootstrap.com/icons/trash/">
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="/canhan.css">
+
+</head>
+<link th:href="@{/css/canhan.css}" href="/css/canhan.css" rel="stylesheet" type="text/css" media="all">
+<link th:href="@{/css/index.css}" href="/css/index.css" rel="stylesheet" type="text/css" media="all" />
+<!-- link fonts local -->
+    <link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}" href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" type="text/css" media="all" />
+<style>
+@charset "UTF-8";
+.dialog-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	z-index: 9999;
+}
+
+.dialog-content {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #429A43;
+	margin: 20px;
+	padding: 10px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+
+.dialog-content-failed {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #FF0000;
+	margin: 20px;
+	padding: 10px;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+</style>
+
+<body>
+<div th:replace="layout/nav ::  nav"></div>
+		<div th:replace="modal/modalCart.html :: #GioHang"></div>
+  <div class="container-xl px-4 mt-4" style="max-width: 1000px; max-height: 800px;">
+    
+    <div class="row">
+    		<div class="col-8 col-lg-4">
+							<div class="card" style="height: 410px">
+								<div class="card-header">
+									<h5 class="card-title">Hình ảnh của user :</h5>
+								</div>
+								<div class="container" style="text-align: center;">
+									<div class="square" id="imageSquare"
+										style="border: 3px solid; display: inline-block; margin: 0 auto;">
+										<img th:if="${selectedImage != null}"
+											class="selected-image" /> <img
+											th:src="@{/images/avatars/__*{image}__}" alt="Image">
+									</div>
+									<br>
+								</div>
+							</div>
+						</div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header" th:if="${message}">Thông tin cá nhân <span th:if="${message}" class="alert-success" style="color: green;" role="alert" th:text="${message}"> Cập nhật thành công.</span> 
+                <!-- Hiển thị thông báo -->
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/shoeshop/personal-page}" th:object="${user}" method="post">
+                    <!-- Form Group (username)-->
+                        <div class="mb-3"> <!-- name -->
+                            <label class="small mb-1" for="id">UserName:</label>
+                            <input  class="form-control" type="text" name="id"  id="id" th:field="*{iD}" readonly="False">
+                        <span class="text-danger" th:if="${#fields.hasErrors('iD')}" th:errors="*{iD}"></span>
+                        </div>
+                        			<input type="file" id="imageInput" th:field="*{image}"
+												style="display: none" />
+                        <!-- Form Group (name)-->
+                        <div class="mb-3"> <!-- name -->
+                            <label class="small mb-1" for="name">Họ và tên:</label>
+                            <input class="form-control" type="text" id="name" th:field="*{name}" placeholder="">
+                        <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (mail)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="email">Email:</label>
+                                <input class="form-control" id="email" th:field="*{email}" type="text" placeholder="" >
+                            <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="email">Mật khẩu:</label>
+                                <input class="form-control" id="password" th:field="*{password}" type="password" placeholder="">
+                            <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                            </div>
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="phone">Số điện thoại:</label>
+                                <input class="form-control" th:field="*{phone}" id="phone" type="text" placeholder="">
+                           <span class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                            </div>
+                            <!-- Form Group (address)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="address">Địa chỉ:</label>
+                                <input class="form-control" th:field="*{address}" id="address" type="text" placeholder="">
+                            <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                            </div>
+                        </div>                   
+                        <button class="btn btn" style="background-color: #232946; color: white;" type="submit">Lưu</button>
+                        <button class="btn btn" style="background-color: #232946; color: white;" type="button">Trở về</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${successMessage}" id="successDialog"
+				class="dialog-overlay">
+				<div class="dialog-content">
+					<p th:text="${successMessage}"></p>
+				</div>
+			</div>
+			<div th:if="${failed}" id="successDialog" class="dialog-overlay">
+				<div class="dialog-content-failed">
+					<p th:text="${failed}"></p>
+				</div>
+			</div>
+</div>
+ <div th:replace="layout/footer ::  footer"></div>
+ 
+ <script th:inline="javascript">
+		/*<![CDATA[*/
+		const square = document.getElementById('imageSquare');
+		const imageInput = document.getElementById('imageInput');
+
+		square.addEventListener('click', function() {
+			// Trigger the file selection dialog
+			imageInput.click();
+		});
+
+		imageInput.addEventListener('change', function(event) {
+			const file = event.target.files[0];
+
+			// Check if a file was selected
+			if (file) {
+				const reader = new FileReader();
+
+				// Read the contents of the file
+				reader.onload = function() {
+					const imageUrl = reader.result;
+
+					// Create an image element and set the source
+					const image = document.createElement('img');
+					image.src = imageUrl;
+					image.classList.add('selected-image');
+
+					// Clear the square and append the image
+					square.innerHTML = '';
+					square.appendChild(image);
+
+					// Send the image to the server via AJAX
+					const formData = new FormData();
+					formData.append('file', file);
+
+					const xhr = new XMLHttpRequest();
+					xhr.open('POST', '/upload', true);
+					xhr.onload = function() {
+						if (xhr.status === 200) {
+							console.log('Image uploaded successfully');
+						} else {
+							console.error('Error uploading image');
+						}
+					};
+					xhr.send(formData);
+				};
+
+				// Read the file as data URL
+				reader.readAsDataURL(file);
+			}
+		});
+		/*]]>*/
+	</script>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <script th:inline="javascript">
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 1000); // 5000 milliseconds = 5 seconds
+	</script>
+</body>
+
+</html>

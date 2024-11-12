@@ -1,0 +1,66 @@
+<nav id="sidebar" class="sidebar js-sidebar">
+	<div class="sidebar-content js-simplebar">
+		<a class="sidebar-brand" href="index.html"> <span
+			class="align-middle">Admin</span>
+		</a>
+
+		<ul class="sidebar-nav">
+			<li class="sidebar-header">Thống kê</li>
+
+			<li class="sidebar-item" th:classappend="${index} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/index}"> <i class="align-middle"
+					data-feather="sliders"></i> <span class="align-middle">Thống kế</span>
+					
+			</a></li>
+					<li class="sidebar-header">Hóa Đơn</li>
+
+			<li class="sidebar-item" th:classappend="${pending} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/pending}"> <i class="align-middle"
+					data-feather="sliders"></i> <span class="align-middle">Đang giao</span>
+					
+			</a></li>
+				<li class="sidebar-item" th:classappend="${delivered} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/delivered}"> <i class="align-middle"
+					data-feather="sliders"></i> <span class="align-middle">Đã giao</span>
+					
+			</a></li>
+				<li class="sidebar-item" th:classappend="${cancelled} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/cancelled}"> <i class="align-middle"
+					data-feather="sliders"></i> <span class="align-middle">Đã hủy</span>
+					
+			</a></li>
+
+
+<!--			<li class="sidebar-header">Tools & Components</li>-->
+
+
+
+			<li class="sidebar-header">Danh Sách </li>
+
+
+			<li class="sidebar-item" th:classappend="${list_product} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/list-product}"> <i
+					class="align-middle" data-feather="align-left"></i> <span
+					class="align-middle"> Sản PHẩm</span>
+			</a></li>
+			<li class="sidebar-item" th:classappend="${list_brand} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/list-brand}"> <i class="align-middle"
+					data-feather="align-left"></i>
+				<span class="align-middle">
+						Thương hiệu</span>
+			</a></li>
+			<li class="sidebar-item" th:classappend="${list_category} ? 'active'"><a class="sidebar-link"
+				th:href="@{/shoeshop/admin/list-category}"> <i
+					class="align-middle" data-feather="align-left"></i> <span
+					class="align-middle">Danh mục </span>
+			</a></li>
+
+
+
+			
+			
+		</ul>
+
+
+	</div>
+</nav>

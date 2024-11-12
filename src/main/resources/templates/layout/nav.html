@@ -1,0 +1,93 @@
+<nav class="navbar navbar-expand-lg navbar-light sticky-top" id="nav">
+	<div class="container-fluid">
+		<button class="navbar-toggler d-lg-none fa-solid bg-dark "
+			type="button" data-bs-toggle="collapse"
+			data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<i class="fas fa-list" style="color: aliceblue"></i>
+		</button>
+		<!-- logo -->
+		<a class="ms-auto" href="#"> <img th:src="@{/icons/logo1.jpg}"
+			alt="logo" width="80px" height="80px">
+		</a>
+		<!-- seach -->
+		<div class="collapse navbar-collapse" id="collapsibleNavId">
+			<ul class="navbar-nav me-auto m-2 mb-lg-0">
+				<li class="nav-item  "><a class="nav-link text-dark"
+					th:href="@{/shoeshop/index}"  aria-current="page" th:text="#{home}" >Trang chủ</a></li>
+				<li class="nav-item dropdown ative"><a
+					class="nav-link text-dark" data-bs-toggle="dropdown" th:text="#{category}"> <i class="fa-solid fa-angle-down fa-xs"></i>
+				</a>
+					<ul class="dropdown-menu fade-up bg-light">
+						<li th:each="category : ${categories}"><a
+							class="dropdown-item" style="color: #686868"
+							th:href="@{/shoeshop/danhmuc-sanpham/{id}(id=${category.id})}"
+							th:text="${category.getName()}"> </a></li>
+					</ul></li>
+				<li class="nav-item" th:if="${hasAdminPermission}"><a
+					class="nav-link text-dark" th:href="@{/shoeshop/admin/index}">Admin</a>
+				</li>
+
+
+			</ul>
+
+			<!--tìm kiếm , User , giỏ hàng-->
+
+			<ul class="navbar-nav m-2 mb-lg-0 ">
+				<!-- tìm kiếm -->
+				<li class="nav-item"><a class="nav-link" data-bs-toggle="modal"
+					data-bs-target="#myModalSeach"> <i
+						class="fa-solid fa-magnifying-glass"></i>
+				</a></li>
+
+				<!-- Đăng nhập -->
+				<li class="nav-item dropdown" style="cursor: pointer;"><a
+					class="nav-link" th:object="${user}" data-bs-toggle="dropdown"
+					href="#"> <i class="fa-solid fa-user"></i> <img th:if="${session.user != null}" th:src="@{/images/avatars/__${session.user.getImage()}__}"
+     class="avatar img-fluid rounded me-1" />
+
+<img th:unless="${session.user != null}" src="path-to-default-image" class="avatar img-fluid rounded me-1" alt="" />
+<th:block th:if="${session.user != null}">
+    <span class="text-dark" th:text="${session.user.getName()}"></span>
+</th:block>
+
+<th:block th:unless="${session.user != null}">
+ 
+</th:block>
+
+				</a>
+					<ul class="dropdown-menu fade-up bg-light"
+						style="list-style: none;">
+
+						<li th:if="${loggedIn}"><a class="dropdown-item"
+							style="color: #686868" th:href="@{/shoeshop/personal-page}" th:text="#{profile}" >
+								tài khoản </a></li>
+
+						<li th:if="${loggedIn}"><a class="dropdown-item"
+							th:href="@{/shoeshop/log-out}" style="color: #686868" href="" th:text="#{logout}">
+								Đăng xuất </a></li>
+						<li th:unless="${loggedIn}"><a class="dropdown-item"
+							style="color: #686868" th:href="@{/shoeshop/login}" th:text="#{login}"> Đăng
+								nhập</a></li>
+						<li th:unless="${loggedIn}"><a class="dropdown-item"
+							style="color: #686868" th:href="@{/shoeshop/signUp}" th:text="#{signup}"> Đăng kí
+						</a></li>
+						<li th:unless="${loggedIn}"><a class="dropdown-item"
+							style="color: #686868" th:href="@{/shoeshop/Forget}" th:text="#{Forgot_password}"> quên
+								mật khẩu </a></li>
+					</ul></li>
+				<!-- giỏ hàng -->
+				<li class="nav-item"><a class="nav-link" aria-current="page"
+					href="#" type="button" data-bs-toggle="offcanvas"
+					data-bs-target="#GioHang"> <i
+						class="fa-solid fa-basket-shopping position-relative"> <span
+							style="font-size: 0.6rem"
+							class="position-absolute top-0 start-100  translate-middle badge rounded-pill bg-danger"
+							th:text="${session.cartItemCount != null ? session.cartItemCount : 0}"></span>
+					</i>
+				</a></li> &ensp;
+			</ul>
+		</div>
+	</div>
+
+</nav>

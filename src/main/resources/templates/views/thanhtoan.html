@@ -1,0 +1,236 @@
+<!doctype html>
+<html 
+	xmlns:th="http://www.thymeleaf.org">
+	<link rel="shortcut icon" th:href="@{/icons/logoMain_48.png}" type="image/x-icon">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Thanh toán</title>    
+        <!-- link css local -->
+    	<link th:href="@{/css/giohang.css}" href="/css/giohang.css" rel="stylesheet" type="text/css" media="all" />
+    	<link th:href="@{/css/index.css}" href="/css/index.css" rel="stylesheet" type="text/css" media="all" />
+	    <!-- link fonts local -->
+    <link th:href="@{/fonts/fontawesome-free-6.4.0-web/css/all.css}" href="/fonts/fontawesome-free-6.4.0-web/css/all.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+<style>
+
+.dialog-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	z-index: 9999;
+}
+
+.dialog-content {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #429A43;
+	margin: 20px;
+	padding: 10px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+
+.dialog-content-failed {
+	border-radius: 10px;
+	font-weight: bolder;
+	color: white;
+	background-color: #FF0000;
+	margin: 20px;
+	padding: 10px;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-top: 25px;
+	max-width: 1000px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+</style>
+<body>
+     <div th:replace="/layout/nav ::  #nav"></div>
+<div class="container thanhtoan">
+  <div class="row ">
+  <i th:utext="${decoratedUri}" style="margin-top: -30px" ></i>
+  <hr>
+     <h3 class="s">THANH TOÁN</h3>
+    <div class="col-lg-6" >
+        <div class="card-title">
+           <h5 class="s"> Thông tin thanh toán</h5>
+            <p class="s">(thông tin bắt buộc nhập)</p>
+        </div>
+        <hr>
+        <form class="row g-3" th:action="@{/shoeshop/thanhtoan}" th:object="${user}" method="post">
+            <div class="col-md-6">
+              <label for="name" class="form-label">Họ và tên:</label>
+              <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="" >
+              <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div class="col-md-6">
+              <label for="phone" class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" id="phone" th:field="*{phone}" placeholder="">
+               <span class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+            </div>
+            <div class="col-md-6">
+              <label for="address" class="form-label">Địa chỉ</label>
+              <input type="text" class="form-control" id="address" th:field="*{address}" placeholder="">
+              <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+            </div>
+            
+            <div class="col-md-6">
+              <input style="display: none" id="itemQuantityInput" name="itemQuantity" />
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="">
+                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+              </div>   
+            <div class="col-12">
+              <div class="form-checkk">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                
+                 Ghi nhớ thông tin
+                </label>
+              </div>
+            </div>
+            <div class="col-12">
+            
+           
+             <button  type="submit" style="background-color: #232946 ;color: #fffffe;" class="btn ">Xác nhận thông tin thanh toán</button>
+             <!-- <a href="./giohang.html"> </a> -->
+             <a th:href="@{/shoeshop/cart/view}" style="background-color: #232946 ;color: #fffffe;" type="button" class="btn"> &#8592; Trở lại</a>   
+            </div>
+          </form>
+    </div> 
+ <div th:if="${successMessage}" id="successDialog"
+				class="dialog-overlay">
+				<div class="dialog-content">
+					<p th:text="${successMessage}"></p>
+				</div>
+			</div>
+			<div th:if="${failed}" id="successDialog" class="dialog-overlay">
+				<div class="dialog-content-failed">
+					<p th:text="${failed}"></p>
+				</div>
+			</div>
+   <div class="col-lg-6">
+      <div class="row">
+
+        <h2>Hóa đơn</h2>
+        <div class="card" style="border:1px solid #232946;">
+          <br>
+         
+        
+            <div class="card-body" >
+              <div class="card-title" th:each="Invoice : ${invoice}">
+                <h6>Đơn hàng: <span th:text="${invoice.id}"></span></h6>
+              </div>
+              <div th:each="item, index : ${cart}">
+              <h7 >Sản phẩm: <span class="${item-name}" style="font-weight: bolder;" th:text="${item.name}" >Bit hunter</span></7>
+              <br>
+            <h7>Số lượng: <span class="item-quantity" id="itemQuantitySpan" ></span></h7> |
+            
+            <h7>Đơn giá: <span style="color: red;font-weight: bolder;" class="item-price" th:text="${item.price}">499000</span> <span style="color: red;font-weight: bolder;">VND</span></h7>
+           <hr class="border-primary" style="height: 3px">
+              </div>
+            
+            <hr>
+            <div class="row">
+              <div class="col-sm-2">
+             
+                  <h5 class="card-title" >Tổng:</h5>
+              </div>
+              <div class="col-sm-10">          
+                 <!--  <p style="color: red;font-weight: bolder;"  th:if="${totalAmount != null}" th:text="${totalAmount} + ' VND'">0 VND</p> -->
+            <h5 style="color: red;font-weight: bolder;" id="totalPrice"> </h5>
+              </div>
+
+              <div></div>
+
+          <div class="col-lg-12">
+            <h4>Hình thức thanh toán</h4>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="radio1" name="optradio" value="option1">
+              <label class="form-check-label" for="gridCheck">
+                Chuyển khoản ngân hàng
+              </label>
+              <h6>
+                Thực hiện thanh toán vào ngay tài khoản ngân hàng của chúng tôi.
+              </h6>
+            </div>
+            <hr>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="radio2" name="optradio" value="option2">
+              <label class="form-check-label" for="gridCheck">
+                Thanh toán trực tiếp tại quầy
+              </label>
+              <h6>Thanh toán trực tiệp tại quầy giao dịch và nhận hàng </h6>
+            </div>
+              <button onclick="ThanhToan()" class="bg-info">Thanh Toán</button>
+             </div>
+      
+         
+        </div>
+      </div>
+    
+    </div>
+</div>
+		<div th:replace="modal/modalCart.html :: #GioHang"></div>
+</div>
+</div>
+</div>
+
+
+
+	  <div th:replace="layout/footer ::  footer"></div>
+		 <script th:inline="javascript">
+
+             function ThanhToan(){
+                 alert("Thanh Toán Thành công")
+             }
+
+		setTimeout(function() {
+			document.getElementById("successDialog").style.display = "none";
+		}, 1000); // 5000 milliseconds = 5 seconds
+		
+		// Lấy giá trị từ sessionStorage
+	    var totalPrice = sessionStorage.getItem('totalPrice');
+		
+		//xử lý truyền số lượng qua
+	    var quantity = sessionStorage.getItem('quantity');
+	    var itemQuantityElement = document.querySelector('.item-quantity');
+	    itemQuantityElement.textContent = quantity;
+
+
+	    // Kiểm tra nếu giá trị tổng giá là null hoặc undefined, gán giá trị mặc định là 0 VND
+	    if (!totalPrice) {
+	        totalPrice = '0 VND';
+	    }
+		
+	    if (!quantity) {
+	        totalPrice = '1';
+	    }
+	    // Gán giá trị vào phần tử HTML
+	    document.getElementById('totalPrice').textContent = totalPrice.toLocaleString() + ' VND'
+	    
+	    // Lấy giá trị từ sessionStorage
+	    var quantity = sessionStorage.getItem('quantity');
+
+	    // Gán giá trị vào thẻ span
+	    var itemQuantitySpan = document.getElementById('itemQuantitySpan');
+	    itemQuantitySpan.textContent = quantity;
+
+	    // Gán giá trị vào input ẩn
+	    var itemQuantityInput = document.getElementById('itemQuantityInput');
+	    itemQuantityInput.value = quantity;
+	</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>
